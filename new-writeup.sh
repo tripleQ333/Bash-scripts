@@ -12,6 +12,9 @@ category="$1"
 name="$2"
 title="${3:-$name}"
 
+# Where the Info.svg template lives. Change this if the CTF repo moves.
+template_root="$HOME/QQQ's_Github/Binary-Exploitation-CTFs"
+
 echo "Finding the repo:"
 cd "$(git rev-parse --show-toplevel)"
 
@@ -27,12 +30,12 @@ echo "Creating folders (Images and Scripts):"
 mkdir -p "$target/Images" "$target/Scripts"
 
 echo "Copying Info.svg template:"
-info_src="$(find . -type f -ipath '*Medium*/Scripts/Info.svg' -print -quit)"
+info_src="$(find "$template_root" -type f -iname 'Info.svg' -print -quit 2>/dev/null)"
 if [ -n "$info_src" ]; then
   cp "$info_src" "$target/Scripts/Info.svg"
   echo "  Copied from: $info_src"
 else
-  echo "  No Info.svg found under a Medium folder. Skipping."
+  echo "  No Info.svg found under $template_root. Skipping."
 fi
 
 echo "Writing README skeleton:"
