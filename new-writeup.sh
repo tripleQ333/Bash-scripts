@@ -26,21 +26,24 @@ fi
 echo "Creating folders (Images and Scripts):"
 mkdir -p "$target/Images" "$target/Scripts"
 
+echo "Copying Info.svg template:"
+info_src="$(find . -type f -ipath '*Medium*/Scripts/Info.svg' -print -quit)"
+if [ -n "$info_src" ]; then
+  cp "$info_src" "$target/Scripts/Info.svg"
+  echo "  Copied from: $info_src"
+else
+  echo "  No Info.svg found under a Medium folder. Skipping."
+fi
+
 echo "Writing README skeleton:"
 cat > "$target/README.md" <<EOF
 ![alt text](../../../Ignore-it/red-blood.svg)
 ![alt text](Scripts/Info.svg)
-
 ## Challenge Overview
-
 ![alt text](Images/1.challenge's_statement.png)
-
 > challenge description goes here
-
 $title write-up starts here.
-
 ## What This Challenge Teaches
-
 - 
 EOF
 
